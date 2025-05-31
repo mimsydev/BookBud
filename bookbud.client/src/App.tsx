@@ -16,14 +16,14 @@ function App() {
     }, []);
 
     const contents = forecasts === undefined
-        ? <p class='text-white'><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
+        ? <p className='text-indigo-600'><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
         : <table className="table-striped table" aria-labelledby="tableLabel">
             <thead>
                 <tr>
-                    <th>Date</th>
-                    <th>Temp. (C)</th>
-                    <th>Temp. (F)</th>
-                    <th>Summary</th>
+                    <th className='text-indigo-600'>Date</th>
+                    <th className='text-indigo-600'>Temp. (C)</th>
+                    <th className='text-indigo-600'>Temp. (F)</th>
+                    <th className='text-indigo-600'>Summary</th>
                 </tr>
             </thead>
             <tbody>
