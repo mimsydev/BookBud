@@ -9,16 +9,43 @@ namespace BookBud.Server.Controllers
     [Route("[controller]")]
     public class BookController(IBookService bookService) : ControllerBase
     {
-        private IBookService bookService => bookService;
-
         [HttpGet("{bookId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public Task<ActionResult<BookDetail>> GetBook(Guid bookId)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<BookDetail>> GetBook(Guid bookId)
         {
-            BookDetail bookDetail = bookService.GetBook(bookId);
+            if(bookId == Guid.Empty)
+            {
+                return BadRequest("BookId cannot be empty");
+            }
 
+            BookDetail bookDetail = await bookService.GetBookAsync(bookId);
 
+            if (bookDetail == null)
+            {
+                return NotFound();
+            }
+
+            return bookDetail;
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<BookDetail>> CreateBook([FromBody] BookDetail bookDetail)
+        {
+            var newBook = await bookService.CreateBookAsync(bookDetail);
+            return newBook;
+        }
+
+        [HttpPut("{bookId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest | StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<BookDetail>> UpdateBook ([FromBody] BookDetail bookDetail, Guid bookId)
+        {
+            var modifiedBook = await bookService.UpdateBookAsync(bookId, bookDetail);
+            return modifiedBook;
         }
     }
 }
