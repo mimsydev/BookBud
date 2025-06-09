@@ -147,6 +147,36 @@ namespace BookBud.Server.Services
         /// }
         /// </code>
         /// </example>
-        public Task<BookDetail> DeleteBookAsync(Guid bookId);
+        public Task<bool> DeleteBookAsync(Guid bookId);
+    }
+
+    public class BookService : IBookService
+    {
+        public Task<List<BookDetail>> GetBooksAsync()
+        {
+            var books = new List<BookDetail>();
+            books.Add(new BookDetail { Id = Guid.NewGuid() });
+            return Task.FromResult(books);
+        }
+
+        public Task<BookDetail> GetBookAsync(Guid bookId)
+        {
+            return Task.FromResult(new BookDetail { Id = bookId});
+        }
+
+        public Task<BookDetail> CreateBookAsync(BookDetail bookDetail)
+        {
+            return Task.FromResult(bookDetail);
+        }
+
+        public Task<BookDetail> UpdateBookAsync(Guid bookId, BookDetail bookDetail)
+        {
+            return Task.FromResult(bookDetail);
+        }
+        
+        public Task<bool> DeleteBookAsync(Guid bookId)
+        {
+            return Task.FromResult(true);
+        }
     }
 }
