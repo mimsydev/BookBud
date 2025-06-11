@@ -1,4 +1,4 @@
-﻿using BookBud.Server.Models;
+using BookBud.Server.Models;
 
 namespace BookBud.Server.Services
 {
@@ -82,7 +82,7 @@ namespace BookBud.Server.Services
         ///     Author = "F. Scott Fitzgerald",
         ///     ISBN = "978-0-7432-7356-5"
         /// };
-        /// 
+        ///
         /// var createdBook = await bookService.CreateBookAsync(newBook);
         /// Console.WriteLine($"Created book with ID: {createdBook.Id}");
         /// </code>
@@ -111,7 +111,7 @@ namespace BookBud.Server.Services
         /// var existingBook = await bookService.GetBookAsync(bookId);
         /// existingBook.Title = "Updated Title";
         /// existingBook.PublicationYear = 2024;
-        /// 
+        ///
         /// var updatedBook = await bookService.UpdateBookAsync(existingBook);
         /// Console.WriteLine($"Updated book: {updatedBook.Title}");
         /// </code>
@@ -150,7 +150,15 @@ namespace BookBud.Server.Services
         public Task<bool> DeleteBookAsync(Guid bookId);
     }
 
-    public class BookService : IBookService
+    /// <summary>
+    /// Provides implementation for book-related business operations in the BookBud application.
+    /// </summary>
+    /// <remarks>
+    /// This class implements the core book management functionality including
+    /// retrieval, creation, updating, and deletion of book records. This is a basic
+    /// implementation that returns mock data for demonstration purposes.
+    /// </remarks>
+    public class BookService() : IBookService
     {
         public Task<List<BookDetail>> GetBooksAsync()
         {
@@ -161,7 +169,7 @@ namespace BookBud.Server.Services
 
         public Task<BookDetail> GetBookAsync(Guid bookId)
         {
-            return Task.FromResult(new BookDetail { Id = bookId});
+            return Task.FromResult(new BookDetail { Id = bookId });
         }
 
         public Task<BookDetail> CreateBookAsync(BookDetail bookDetail)
@@ -173,7 +181,7 @@ namespace BookBud.Server.Services
         {
             return Task.FromResult(bookDetail);
         }
-        
+
         public Task<bool> DeleteBookAsync(Guid bookId)
         {
             return Task.FromResult(true);
