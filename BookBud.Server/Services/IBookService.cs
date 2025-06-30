@@ -1,4 +1,5 @@
 using BookBud.Server.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookBud.Server.Services
 {
@@ -158,33 +159,50 @@ namespace BookBud.Server.Services
     /// retrieval, creation, updating, and deletion of book records. This is a basic
     /// implementation that returns mock data for demonstration purposes.
     /// </remarks>
-    public class BookService() : IBookService
+    public class BookService : IBookService
     {
-        public Task<List<BookDetail>> GetBooksAsync()
+        private readonly BookBudContext _bookBudContext;
+        public BookService(BookBudContext bookBudContext)
         {
-            var books = new List<BookDetail>();
-            books.Add(new BookDetail { Id = Guid.NewGuid() });
-            return Task.FromResult(books);
+            _bookBudContext = bookBudContext;
         }
 
-        public Task<BookDetail> GetBookAsync(Guid bookId)
+        public async Task<List<BookDetail>> GetBooksAsync()
         {
-            return Task.FromResult(new BookDetail { Id = bookId });
+            return await _bookBudContext.Books.ToListAsync();
         }
 
-        public Task<BookDetail> CreateBookAsync(BookDetail bookDetail)
+        public async Task<BookDetail> GetBookAsync(Guid bookId)
         {
-            return Task.FromResult(bookDetail);
+            return await _bookBudContext.Books.SingleAsync(b => b.Id == bookId);
         }
 
-        public Task<BookDetail> UpdateBookAsync(Guid bookId, BookDetail bookDetail)
+        public async Task<BookDetail> CreateBookAsync(BookDetail bookDetail)
         {
-            return Task.FromResult(bookDetail);
+            await _bookBudContext.Books.AddAsync(bookDetail);
+            await _bookBudContext.SaveChangesAsync();
+            return bookDetail;
         }
 
-        public Task<bool> DeleteBookAsync(Guid bookId)
+        public async Task<BookDetail> UpdateBookAsync(Guid bookId, BookDetail bookDetail)
         {
-            return Task.FromResult(true);
+            await _bookBudContext.Books
+                .Where(b => b.Id.Equals(bookId))
+                .ExecuteUpdateAsync(setters => setters
+                .SetProperty(b => b.Title, bookDetail.Title)
+                .SetProperty(b => b.ISBN10, bookDetail.ISBN10)
+                .SetProperty(b => b.Author, bookDetail.Author)
+                .SetProperty(b => b.ImageUrl, bookDetail.ImageUrl)
+                .SetProperty(b => b.UpdateDate, bookDetail.UpdateDate)
+                );
+
+            return bookDetail;
+        }
+
+        public async Task<bool> DeleteBookAsync(Guid bookId)
+        {
+            await _bookBudContext.Books.Where(b => b.Id.Equals(bookId)).ExecuteDeleteAsync();
+            return true;
         }
     }
 }

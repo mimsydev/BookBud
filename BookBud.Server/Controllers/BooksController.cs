@@ -6,9 +6,23 @@ using Microsoft.Extensions.Logging.Abstractions;
 namespace BookBud.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class BookController(IBookService bookService) : ControllerBase
     {
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<List<BookDetail>>> GetBooks()
+        {
+            var books = await bookService.GetBooksAsync();
+            if (books == null) 
+            {
+                return BadRequest();
+            }
+            return books;
+        }
+
         [HttpGet("{bookId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -46,6 +60,15 @@ namespace BookBud.Server.Controllers
         {
             var modifiedBook = await bookService.UpdateBookAsync(bookId, bookDetail);
             return modifiedBook;
+        }
+
+        [HttpDelete("{bookId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest | StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<bool>> DeleteBook(Guid bookId)
+        {
+            await bookService.DeleteBookAsync(bookId);
+            return true;
         }
     }
 }
