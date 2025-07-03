@@ -70,5 +70,15 @@ namespace BookBud.Server.Controllers
             await bookService.DeleteBookAsync(bookId);
             return true;
         }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest | StatusCodes.Status404NotFound)]
+        [Route("api/[controller]/search")]
+        public async Task<ActionResult<List<OpenLibBook>>> SearchBook()
+        {
+            List<OpenLibBook> books = [];
+            return books;
+        }
     }
 }

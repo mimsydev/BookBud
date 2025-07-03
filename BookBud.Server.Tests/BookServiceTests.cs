@@ -7,7 +7,7 @@ using Moq.EntityFrameworkCore;
 namespace BookBud.Server.Tests
 {
     // ============================================================================
-    // UNIT TESTS (Using Mocking - Fast, Isolated)
+    //                                  UNIT TESTS 
     // ============================================================================
 
     public class BookServiceUnitTests
@@ -118,7 +118,7 @@ namespace BookBud.Server.Tests
     }
 
     // ============================================================================
-    // IMPROVED TEST DATABASE FIXTURE (For Real Database Integration Tests)
+    //                              DATABASE TESTING
     // ============================================================================
 
     public class BookServiceDatabaseTests : IClassFixture<ImprovedTestDatabaseFixture>
