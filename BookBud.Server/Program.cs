@@ -1,5 +1,7 @@
 using Serilog;
-using BookBud.Server.Services;
+using BookBud.Server.Books;
+using BookBud.Server.BookProvider;
+using BookBud.Server.OpenLib;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +17,11 @@ builder.Services.AddDbContext<BookBudContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")
         ?? throw new InvalidOperationException("Connection string 'Default Connection' Not Found"));
 });
+builder.Services.AddHttpClient<OpenLibService>(client =>
+{
+    client.BaseAddress = new Uri("https://openlibrary.org/");
+});
+builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

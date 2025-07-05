@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using BookBud.Server.Models;
 
-namespace BookBud.Server.Controllers
+namespace BookBud.Server.BookProvider
 {
     public class BookProviderController : Controller
     {
@@ -9,9 +8,9 @@ namespace BookBud.Server.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest | StatusCodes.Status404NotFound)]
         [Route("api/[controller]/search")]
-        public async Task<ActionResult<List<BookDetail>>> GetBooks()
+        public async Task<ActionResult<List<IProvidedBook>>> GetBooks()
         {
-            List<BookDetail> books = [];
+            List<IProvidedBook> books = [];
             return books;
         }
     }

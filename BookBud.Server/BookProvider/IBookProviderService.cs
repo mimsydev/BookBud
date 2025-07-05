@@ -1,14 +1,9 @@
-﻿using BookBud.Server.Models;
-using System.ComponentModel;
-using System.Text.Json;
-
-namespace BookBud.Server.Services
+﻿namespace BookBud.Server.BookProvider
 {
-    public interface IBookProviderService
+    public interface IBookProviderService<T> where T : IProvidedBook
     {
-        public Task<List<BookDetail>> GetBooks(string query);
-        public Task<List<BookDetail>> GetBook(string query);
-        public BookDetail ConvertBook<T>(T book) where T : IProvidedBook;
+        public Task<List<T>> GetBooks(string query);
+        public Task<T> GetBook(string query);
     }
 
 }

@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using BookBud.Server.Models;
 using BookBud.Server.Services;
 using Microsoft.Extensions.Logging.Abstractions;
 
-namespace BookBud.Server.Controllers
+namespace BookBud.Server.Books
 {
     [ApiController]
     [Route("api/[controller]")]

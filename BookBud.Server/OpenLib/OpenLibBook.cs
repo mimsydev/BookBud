@@ -1,6 +1,6 @@
-﻿namespace BookBud.Server.Models
+﻿namespace BookBud.Server.BookProvider.OpenLib
 {
-    public class OpenLibBook
+    public class OpenLibBook : IProvidedBook
     {
     }
 }

@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Moq;
-using BookBud.Server.Models;
-using BookBud.Server.Services;
-using BookBud.Server.Services.OpenLib;
+﻿using Moq;
 using Moq.Protected;
 using System.Net;
-using System.Net.Http;
 using System.Net.Http.Json;
+using BookBud.Server.BookProvider;
+using BookBud.Server.BookProvider.OpenLib;
+using Microsoft.Extensions.Logging;
 
 namespace BookBud.Server.Tests
 {
@@ -18,25 +12,28 @@ namespace BookBud.Server.Tests
     {
         private readonly OpenLibService _openLibraryService;
         private readonly HttpClient _httpClient;
+        private readonly Mock<ILogger<OpenLibService>> _logger;
         private static readonly string[] _jsonGetBooksContent = [" "];
+        private static readonly string _baseUri = "https://openlibrary.org/";
 
         public OpenLibraryTest()
         {
             var handlerMock = new Mock<HttpMessageHandler>();
-            handlerMock
-                .Protected()
-                .Setup<Task<HttpResponseMessage>>(
-                    "GetBooksAsync",
-                    ItExpr.IsAny<HttpRequestMessage>(),
-                    ItExpr.IsAny<CancellationToken> ())
-                .ReturnsAsync(new HttpResponseMessage() 
+
+            handlerMock.SetupSendAsync(HttpMethod.Get, $"{_baseUri}/search.json").ReturnsAsync(new HttpResponseMessage() 
                 {
                     StatusCode = HttpStatusCode.OK,
                     Content = JsonContent.Create(_jsonGetBooksContent)
                 });
 
-            _openLibraryService = new OpenLibService()
-            _httpClient = httpClient;
+            _httpClient = new HttpClient(handlerMock.Object)
+            {
+                BaseAddress = new Uri(_baseUri)
+            };
+
+            _logger = new Mock<ILogger<OpenLibService>>();
+            _openLibraryService = new OpenLibService(_logger.Object, _httpClient);
+
         }
 
         [Fact]

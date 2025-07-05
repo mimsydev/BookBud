@@ -1,28 +1,26 @@
-﻿using BookBud.Server.Models;
-namespace BookBud.Server.Services.OpenLib
+﻿namespace BookBud.Server.BookProvider.OpenLib
 {
-    public class OpenLibService : IBookProviderService
+    public class OpenLibService : IBookProviderService<OpenLibBook>
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger<OpenLibService> _logger;
         public OpenLibService(ILogger<OpenLibService> logger, HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri("https://openlibrary.org/");
             _logger = logger;
         }
 
-        public async Task<List<BookDetail>> GetBooks(string query)
+        public async Task<List<OpenLibBook>> GetBooks(string query)
         {
             var responseString = await _httpClient.GetStringAsync(string.Format("/search.json?q={)}",query));
-            List<BookDetail> books = [];
+            List<OpenLibBook> books = [];
             return books;
 
         }
 
-        public async Task<BookDetail> GetBook(string query)
+        public async Task<OpenLibBook> GetBook(string query)
         {
-            return new BookDetail() { Title = "", Author = "", ISBN10 = "" };
+            return new OpenLibBook();
 
         }
 

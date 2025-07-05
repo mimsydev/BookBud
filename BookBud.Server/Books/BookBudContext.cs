@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using BookBud.Server.Models;
 
-namespace BookBud.Server.Services
+namespace BookBud.Server.Books
 {
     public class BookBudContext(DbContextOptions<BookBudContext> options) : DbContext(options)
     {

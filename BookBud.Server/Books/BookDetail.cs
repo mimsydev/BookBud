@@ -1,4 +1,4 @@
-namespace BookBud.Server.Models
+namespace BookBud.Server.Books
 {
     public class BookDetail
     {

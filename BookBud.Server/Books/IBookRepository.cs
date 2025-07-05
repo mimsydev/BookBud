@@ -1,14 +1,6 @@
-namespace BookBud.Server.Books
+﻿namespace BookBud.Server.Books
 {
-    /// <summary>
-    /// Provides contract for book-related business operations in the BookBud application.
-    /// </summary>
-    /// <remarks>
-    /// This interface defines the core book management functionality including
-    /// retrieval and creation of book records. Implementations should handle
-    /// business logic, validation, and coordinate with data access layers.
-    /// </remarks>
-    public interface IBookService
+    public interface IBookRepository
     {
         /// <summary>
         /// Retrieves all books from the system.
@@ -146,51 +138,5 @@ namespace BookBud.Server.Books
         /// </code>
         /// </example>
         public Task<bool> DeleteBookAsync(Guid bookId);
-    }
-
-    /// <summary>
-    /// Provides implementation for book-related business operations in the BookBud application.
-    /// </summary>
-    /// <remarks>
-    /// This class implements the core book management functionality including
-    /// retrieval, creation, updating, and deletion of book records. This is a basic
-    /// implementation that returns mock data for demonstration purposes.
-    /// </remarks>
-    public class BookService : IBookService
-    {
-        private readonly IBookRepository _bookRepository;
-        public BookService( IBookRepository bookRepository)
-        {
-            _bookRepository = bookRepository;
-        }
-
-        public async Task<List<BookDetail>> GetBooksAsync()
-        {
-            return await _bookRepository.GetBooksAsync();
-        }
-
-        public async Task<BookDetail> GetBookAsync(Guid bookId)
-        {
-            return await _bookRepository.GetBookAsync(bookId);
-        }
-
-        public async Task<BookDetail> CreateBookAsync(BookDetail bookDetail)
-        {
-            await _bookRepository.CreateBookAsync(bookDetail);
-            return bookDetail;
-        }
-
-        public async Task<BookDetail> UpdateBookAsync(Guid bookId, BookDetail bookDetail)
-        {
-            await _bookRepository.UpdateBookAsync(bookId, bookDetail);
-
-            return bookDetail;
-        }
-
-        public async Task<bool> DeleteBookAsync(Guid bookId)
-        {
-            await _bookRepository.DeleteBookAsync(bookId);
-            return true;
-        }
     }
 }
