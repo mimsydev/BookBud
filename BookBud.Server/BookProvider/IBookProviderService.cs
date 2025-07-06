@@ -1,9 +1,9 @@
 ﻿namespace BookBud.Server.BookProvider
 {
-    public interface IBookProviderService<T> where T : IProvidedBook
+    public interface IBookProviderService
     {
-        public Task<List<T>> GetBooks(string query);
-        public Task<T> GetBook(string query);
+        public Task<IEnumerable<ISearchResult>> SearchBooksAsync(string query);
+        public Task<IProvidedBook> GetBookAsync(string query);
     }
 
 }
