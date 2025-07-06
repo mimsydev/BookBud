@@ -1,7 +1,6 @@
 using Serilog;
 using BookBud.Server.Books;
-using BookBud.Server.BookProvider;
-using BookBud.Server.OpenLib;
+using BookBud.Server.BookProvider.OpenLib;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +20,7 @@ builder.Services.AddHttpClient<OpenLibService>(client =>
 {
     client.BaseAddress = new Uri("https://openlibrary.org/");
 });
+builder.Services.AddScoped<IBookRepository, SqlBookRepository>();
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

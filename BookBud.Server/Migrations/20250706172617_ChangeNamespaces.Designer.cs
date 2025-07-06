@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookBud.Server.Migrations
 {
     [DbContext(typeof(BookBudContext))]
-    [Migration("20250629143755_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250706172617_ChangeNamespaces")]
+    partial class ChangeNamespaces
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace BookBud.Server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BookBud.Server.Models.BookDetail", b =>
+            modelBuilder.Entity("BookBud.Server.Books.BookDetail", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -39,7 +39,6 @@ namespace BookBud.Server.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ISBN10")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")

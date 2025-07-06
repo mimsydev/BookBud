@@ -12,39 +12,29 @@ namespace BookBud.Server.Books
 
         public async Task<List<BookDetail>> GetBooksAsync()
         {
-            return await _bookBudContext.Books.ToListAsync();
+            return await _bookBudContext.GetBooksAsync();
         }
 
         public async Task<BookDetail> GetBookAsync(Guid bookId)
         {
-            return await _bookBudContext.Books.SingleAsync(b => b.Id == bookId);
+            return await _bookBudContext.GetBookAsync(bookId);
         }
 
         public async Task<BookDetail> CreateBookAsync(BookDetail bookDetail)
         {
-            await _bookBudContext.Books.AddAsync(bookDetail);
-            await _bookBudContext.SaveChangesAsync();
+            await _bookBudContext.CreateBookAsync(bookDetail);
             return bookDetail;
         }
 
         public async Task<BookDetail> UpdateBookAsync(Guid bookId, BookDetail bookDetail)
         {
-            await _bookBudContext.Books
-                .Where(b => b.Id.Equals(bookId))
-                .ExecuteUpdateAsync(setters => setters
-                .SetProperty(b => b.Title, bookDetail.Title)
-                .SetProperty(b => b.ISBN10, bookDetail.ISBN10)
-                .SetProperty(b => b.Author, bookDetail.Author)
-                .SetProperty(b => b.ImageUrl, bookDetail.ImageUrl)
-                .SetProperty(b => b.UpdateDate, bookDetail.UpdateDate)
-                );
-
+            await _bookBudContext.UpdateBookAsync(bookId, bookDetail);
             return bookDetail;
         }
 
         public async Task<bool> DeleteBookAsync(Guid bookId)
         {
-            await _bookBudContext.Books.Where(b => b.Id.Equals(bookId)).ExecuteDeleteAsync();
+            await _bookBudContext.DeleteBookAsync(bookId);
             return true;
         }
     }
