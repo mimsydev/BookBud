@@ -1,8 +1,9 @@
-﻿using System.Text.Json;
+﻿using BookBud.Server.Books;
+using System.Text.Json;
 
 namespace BookBud.Server.BookProvider.OpenLib
 {
-    public class OpenLibService : IBookProviderService
+    public class OpenLibService : IBookProviderService<Book, BookResponse>
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger<OpenLibService> _logger;
@@ -12,7 +13,7 @@ namespace BookBud.Server.BookProvider.OpenLib
             _logger = logger;
         }
 
-        public async Task<IEnumerable<ISearchResult>> SearchBooksAsync(string query)
+        public async Task<IEnumerable<Book>> SearchBooksAsync(string query)
         {
             var responseString = await _httpClient.GetStringAsync(string.Format("/search.json?q={)}",query));
             var searchResult = JsonSerializer.Deserialize<SearchResponse>(responseString);
@@ -21,7 +22,7 @@ namespace BookBud.Server.BookProvider.OpenLib
 
         }
 
-        public async Task<IProvidedBook> GetBookAsync(string query)
+        public async Task<BookResponse> GetBookAsync(string query)
         {
             return new BookResponse();
 

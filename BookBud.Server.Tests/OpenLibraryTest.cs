@@ -5,19 +5,13 @@ using System.Net.Http.Json;
 using BookBud.Server.BookProvider;
 using BookBud.Server.BookProvider.OpenLib;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace BookBud.Server.Tests
 {
-    public class OpenLibraryTest
+    public class OpenLibraryTest()
     {
-        private readonly HttpClient _httpClient;
-        private readonly Mock<ILogger<OpenLibService>> _logger;
         private static readonly string _baseUri = "https://openlibrary.org/";
-
-        public OpenLibraryTest()
-        {
-
-        }
 
         [Fact]
         public async Task GetBooksAsync_ReturnsBooks()
@@ -39,9 +33,12 @@ namespace BookBud.Server.Tests
             var logger = new Mock<ILogger<OpenLibService>>();
             var openLibraryService = new OpenLibService(logger.Object, httpClient);
 
-            var books = openLibraryService.SearchBooksAsync("title: Lord of the rings");
+            var books = await openLibraryService.SearchBooksAsync("title: Lord of the rings");
+            var bookList = Enumerable.ToList<Book>(books);
 
-            
+            Assert.NotNull(books);
+            Assert.True(bookList.Count > 10);
+            Assert.Equal( "The Lord of the Rings", bookList[0].Title);
         }
     }
 }

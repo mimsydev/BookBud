@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using BookBud.Server.Services;
 using Microsoft.Extensions.Logging.Abstractions;
 
 namespace BookBud.Server.Books
