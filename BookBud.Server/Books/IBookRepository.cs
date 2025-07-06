@@ -22,7 +22,7 @@
         /// }
         /// </code>
         /// </example>
-        public Task<List<BookDetail>> GetBooksAsync();
+        public Task<List<BookDetail?>?> GetBooksAsync();
 
         /// <summary>
         /// Retrieves a book by its unique identifier.
@@ -45,7 +45,7 @@
         /// }
         /// </code>
         /// </example>
-        public Task<BookDetail> GetBookAsync(Guid bookId);
+        public Task<BookDetail?> GetBookAsync(Guid bookId);
 
         /// <summary>
         /// Creates a new book record in the system.
@@ -77,7 +77,7 @@
         /// Console.WriteLine($"Created book with ID: {createdBook.Id}");
         /// </code>
         /// </example>
-        public Task<BookDetail> CreateBookAsync(BookDetail bookDetail);
+        public Task<BookDetail?> CreateBookAsync(BookDetail bookDetail);
 
         /// <summary>
         /// Updates an existing book record in the system.
@@ -106,7 +106,7 @@
         /// Console.WriteLine($"Updated book: {updatedBook.Title}");
         /// </code>
         /// </example>
-        public Task<BookDetail> UpdateBookAsync(Guid bookId, BookDetail bookDetail);
+        public Task<BookDetail?> UpdateBookAsync(Guid bookId, BookDetail bookDetail);
 
         /// <summary>
         /// Deletes a book from the system by its unique identifier.

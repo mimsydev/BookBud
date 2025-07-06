@@ -81,7 +81,7 @@ namespace BookBud.Server.Tests
             // Arrange
             var invalidId = Guid.NewGuid();
             _mockRepository.Setup(m => m.GetBookAsync(invalidId))
-                .ReturnsAsync(_testBooks.First(b => b.Id == invalidId));
+                .ReturnsAsync(null, TimeSpan.FromTicks(5));
 
             // Act & Assert
             await Assert.ThrowsAsync<InvalidOperationException>(

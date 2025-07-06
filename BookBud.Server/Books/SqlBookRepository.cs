@@ -10,26 +10,28 @@ namespace BookBud.Server.Books
             _bookBudContext = bookBudContext;
         }
 
-        public async Task<List<BookDetail>> GetBooksAsync()
+        public async Task<List<BookDetail>?> GetBooksAsync()
         {
             return await _bookBudContext.GetBooksAsync();
         }
 
-        public async Task<BookDetail> GetBookAsync(Guid bookId)
+        public async Task<BookDetail?> GetBookAsync(Guid bookId)
         {
             return await _bookBudContext.GetBookAsync(bookId);
         }
 
-        public async Task<BookDetail> CreateBookAsync(BookDetail bookDetail)
+        public async Task<BookDetail?> CreateBookAsync(BookDetail bookDetail)
         {
             await _bookBudContext.CreateBookAsync(bookDetail);
-            return bookDetail;
+            var newBookDetail = await GetBookAsync(bookDetail.Id);
+            return newBookDetail;
         }
 
-        public async Task<BookDetail> UpdateBookAsync(Guid bookId, BookDetail bookDetail)
+        public async Task<BookDetail?> UpdateBookAsync(Guid bookId, BookDetail bookDetail)
         {
             await _bookBudContext.UpdateBookAsync(bookId, bookDetail);
-            return bookDetail;
+            var updatedBook = await GetBookAsync(bookId);
+            return updatedBook;
         }
 
         public async Task<bool> DeleteBookAsync(Guid bookId)

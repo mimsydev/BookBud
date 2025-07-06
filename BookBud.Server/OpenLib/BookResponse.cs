@@ -2,7 +2,7 @@
 
 namespace BookBud.Server.BookProvider.OpenLib
 {
-public record BookResponse : IProvidedBook
+public record BookDetail : IProvidedBook
 {
     [JsonPropertyName("type")]
     public TypeReference? Type { get; init; }

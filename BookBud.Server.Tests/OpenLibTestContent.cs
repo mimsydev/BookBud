@@ -2507,7 +2507,6 @@ namespace BookBud.Server.Tests
               ]
             }
             """;
-
         public static string EditionsTestResult = """
             {
               "links": {
@@ -5234,6 +5233,55 @@ namespace BookBud.Server.Tests
                   }
                 }
               ]
+            }
+            """;
+        public static string BookTestResult = """
+            {
+              "type": {
+                "key": "/type/edition"
+              },
+              "title": "The Lord of the Rings [BOX SET]",
+              "authors": [
+                {
+                  "key": "/authors/OL26320A"
+                }
+              ],
+              "publish_date": "Dec 04, 1999",
+              "source_records": [
+                "amazon:0261103938",
+                "bwb:9780261103931"
+              ],
+              "publishers": [
+                "Harper Collins"
+              ],
+              "physical_format": "hardcover",
+              "works": [
+                {
+                  "key": "/works/OL27448W"
+                }
+              ],
+              "key": "/books/OL42871495M",
+              "covers": [
+                14166496
+              ],
+              "identifiers": {},
+              "isbn_10": [
+                "0261103938"
+              ],
+              "isbn_13": [
+                "9780261103931"
+              ],
+              "classifications": {},
+              "latest_revision": 6,
+              "revision": 6,
+              "created": {
+                "type": "/type/datetime",
+                "value": "2022-12-04T01:42:20.070259"
+              },
+              "last_modified": {
+                "type": "/type/datetime",
+                "value": "2024-05-20T15:22:56.910944"
+              }
             }
             """;
     }

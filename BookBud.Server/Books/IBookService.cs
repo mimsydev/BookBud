@@ -166,25 +166,34 @@ namespace BookBud.Server.Books
 
         public async Task<List<BookDetail>> GetBooksAsync()
         {
-            return await _bookRepository.GetBooksAsync();
+            var books = await _bookRepository.GetBooksAsync();
+            return books ?? 
+                throw new InvalidOperationException("There was an error retrieving books from the book repository.");
         }
 
         public async Task<BookDetail> GetBookAsync(Guid bookId)
         {
-            return await _bookRepository.GetBookAsync(bookId);
+            ArgumentNullException.ThrowIfNull(bookId, nameof(bookId));
+            var book = await _bookRepository.GetBookAsync(bookId);
+            return book ?? 
+                throw new InvalidOperationException($"Book id: {bookId} does not return any records from the database.");
         }
 
         public async Task<BookDetail> CreateBookAsync(BookDetail bookDetail)
         {
-            await _bookRepository.CreateBookAsync(bookDetail);
-            return bookDetail;
+            ArgumentNullException.ThrowIfNull(bookDetail, nameof(bookDetail));
+            var newBook = await _bookRepository.CreateBookAsync(bookDetail);
+            return newBook ?? 
+                throw new InvalidOperationException("There was a problem creating the new book detail");
         }
 
         public async Task<BookDetail> UpdateBookAsync(Guid bookId, BookDetail bookDetail)
         {
-            await _bookRepository.UpdateBookAsync(bookId, bookDetail);
+            ArgumentNullException.ThrowIfNull(bookId, nameof(bookId));
+            var newBook = await _bookRepository.UpdateBookAsync(bookId, bookDetail);
 
-            return bookDetail;
+            return newBook ?? 
+                throw new InvalidOperationException($"There was a problem creating book with book id: {bookId}");
         }
 
         public async Task<bool> DeleteBookAsync(Guid bookId)

@@ -1,6 +1,7 @@
 ﻿using Moq;
 using Moq.Language;
 using Moq.Protected;
+using Moq.Contrib;
 
 namespace BookBud.Server.Tests
 {
